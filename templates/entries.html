@@ -1,13 +1,60 @@
 {% extends "base.html" %}
 
-{% block content %}
-<ul>
-    {% for entry in entries %}
-    <li>
-        <h2>{{ entry.title }}</h2>
-        <p> {{ entry.description }}</p>
-        <p>	<h5> {{ entry.ruta}}</h5></p>
-    </li>
-    {% endfor %}
-</ul>
-{% endblock content %}
+
+{% block script %}
+<script src="http://maps.google.com/maps/api/js?sensor=false"></script>
+<script type="text/javascript" 
+        src="{{ url_for('static', filename= 'js/jquery-2.1.1.min.js') }}"></script>
+<script type="text/javascript" 
+        src= "{{ url_for('static', filename='js/jquery.gomap-1.3.3.min.js')}}"></script>
+<script>
+        $(document).ready(function(){
+        	$('#map').goMap({
+					latitude: -39.8253,
+					longitude: -73.2378,
+					zoom:13,
+				});
+        });
+    </script>
+{% endblock script %}
+
+{% block style%}
+<style type="text/css">
+    body {
+        padding-top: 50px;
+        }
+    #map {
+      width:700px; 
+      height:400px; 
+    } 
+    div #map{
+    	height: 70%;
+    	left: 50%;
+    	position: absolute;
+    	top: 20%;
+    	width: 45%;
+    }
+    div #content{
+    	height: 70%;
+    	left: 25%;
+    	overflow: hidden;;
+    	position: absolute;
+    	top: 20%;
+    	width: 45%;
+    }
+</style>
+{% endblock style%}
+
+{% block content%}
+ <table class="table" id="table">
+ {% for entry in entries %}    
+  <tr>
+    <td>{{ entry.id }}</td>
+    <td>{{ entry.latitud }}</td>
+    <td>{{ entry.longitud }}</td>
+    <td>{{ entry.description }}</td>
+    <td>{{ entry.user}}</td>
+  </tr>
+  {% endfor %}
+</table> 
+{% endblock content%}

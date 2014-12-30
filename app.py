@@ -27,6 +27,11 @@ def init_db():
 
 @app.route('/')
 def base():
-    return render_template('base.html')
+    db = connect_db()
+    cur = db.execute('SELECT id,latitud ,longitud,description,user FROM entry')
+    entries = cur.fetchall()
+    db.close()
+    return render_template('entries.html',entries=entries)
+
 if __name__ == "__main__":
     app.run(debug=True)
