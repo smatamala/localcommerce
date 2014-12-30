@@ -10,11 +10,35 @@
 <script>
         $(document).ready(function(){
         	$('#map').goMap({
+        			maptype:'ROADMAP',
 					latitude: -39.8253,
 					longitude: -73.2378,
 					zoom:13,
+					markers:[{
+						latitude: -39.8253,
+						longitude: -73.2378,
+						html:{
+							content:'vadivia',
+							popup:false
+						}
+					}],
+					addMarker:true,
+					disableDoubleClickZoom:true,
 				});
+        	$('#map').click(function(){
+        		alert($.goMap.getMarkersCount());
+
+        	});
         });
+
+        	$.goMap.createMarker({
+        		latitude:lat,
+        		longitude:lon,
+        		html:{
+        			content:des,
+        			popup:false
+        		}
+        	});
     </script>
 {% endblock script %}
 
@@ -24,37 +48,39 @@
         padding-top: 50px;
         }
     #map {
-      width:700px; 
-      height:400px; 
+      width:900px; 
+      height:600px;
+      margin: auto;
     } 
-    div #map{
-    	height: 70%;
-    	left: 50%;
-    	position: absolute;
-    	top: 20%;
-    	width: 45%;
-    }
-    div #content{
-    	height: 70%;
-    	left: 25%;
-    	overflow: hidden;;
-    	position: absolute;
-    	top: 20%;
-    	width: 45%;
+    #table{
+    	height: auto;
+    	width: auto;
+    	margin: auto;
     }
 </style>
 {% endblock style%}
 
 {% block content%}
- <table class="table" id="table">
- {% for entry in entries %}    
-  <tr>
-    <td>{{ entry.id }}</td>
-    <td>{{ entry.latitud }}</td>
-    <td>{{ entry.longitud }}</td>
-    <td>{{ entry.description }}</td>
-    <td>{{ entry.user}}</td>
-  </tr>
-  {% endfor %}
+ <table class="table table-striped" id="table">
+	 <thead>
+	 	<tr >
+		    <td>id</td>
+		    <td>latitud</td>
+		    <td>longitud</td>
+		    <td>descripcion</td>
+		    <td>user</td>
+	  	</tr>
+	 </thead>
+	 <tbody>
+	 {% for entry in entries %}
+	  <tr >
+	    <td>{{ entry.id }}</td>
+	    <td>{{ entry.latitud }}</td>
+	    <td>{{ entry.longitud }}</td>
+	    <td>{{ entry.description }}</td>
+	    <td>{{ entry.user}}</td>
+	  </tr>
+	  {% endfor %}
+	  </tbody>
 </table> 
 {% endblock content%}

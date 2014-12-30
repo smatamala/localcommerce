@@ -33,17 +33,11 @@
     </script>
 {% endblock script %}
 
-<title>{% block title %}Blog flask{% endblock title %}</title>
+<title>{% block title %}LocalCommerce{% endblock title %}</title>
 
 {% block style%}
 <style type="text/css">
-    body {
-        padding-top: 50px;
-        }
-    #map {
-      width:700px; 
-      height:400px; 
-    } 
+    
 </style>
 {% endblock style%}
 
@@ -57,7 +51,7 @@
 
 {% endblock head %}
 </head>
-<body>
+<body background="{{url_for('static', filename='bootstrap/background2.jpg')}}">
 
 {% block menu %}
 <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -79,26 +73,19 @@
     </div><!--/.nav-collapse -->
   </div>
 </div>
-<br>
 {% endblock menu %}
-<h1 align="center" >GoMap</h1>
+<h1 align="center" >LocalCommerce</h1>
 
-<div align="center"></div>
-  <div id="map" align="left">
-    
-  </div>
-
-  <div align="right">
+<table cellpadding="1px"id="table" >
+  <tr>
+    <td><div id="map" align="left"></div></td>
+    <td><div align="right">
         {% block content %}
 
         {% endblock content %}
-  </div>
-</div>
+  </div></td>
 
-
-
-
-
-
+  </tr>
+</table> 
 </body>
 </html>
