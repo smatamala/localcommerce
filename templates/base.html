@@ -18,8 +18,10 @@
 
 {% block script %}
 <script src="http://maps.google.com/maps/api/js?sensor=false"></script>
-<script src="{{ url_for('static', finename='js/jquery-2.1.1.min.js')}}"></script> 
-<script src= "{{ url_for('static', finename='js/jquery.gomap-1.3.3.min.js')}}"></script>
+<script type="text/javascript" 
+        src="{{ url_for('static', filename= 'js/jquery-2.1.1.min.js') }}"></script>
+<script type="text/javascript" 
+        src= "{{ url_for('static', finename= 'js/jquery.gomap-1.3.2.min.js')}}"></script>
 <script>
         $(document).ready(function(){
           $("#map").goMap();
