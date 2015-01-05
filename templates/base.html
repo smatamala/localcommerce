@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html lang="es">
 <head>
 {% block head %}
@@ -76,10 +76,34 @@
 {% endblock menu %}
 <h1 align="center" >LocalCommerce</h1>
 
+{% block select %}
+
+{% endblock select %}
 <table cellpadding="1px"id="table" >
   <tr>
     <td><div id="map" align="left"></div></td>
     <td><div align="right">
+
+
+<form class="form" role="form" name="input" action="" method="post" enctype="multipart/form-data">
+  <div class="form-group">
+    <label >Categoria</label>
+    <input type="text" class="form-control" id="categoria" placeholder="Categoria">
+  </div>
+  <div class="form-group">
+    <label >Descripcion</label>
+    <input type="text" class="form-control" id="descripcion" placeholder="Descripcion">
+  </div>
+  <div class="form-group">
+    <label >ubicacion</label>
+    <input type="text-lock" class="form-control" id="latitud" placeholder="latitud">
+    <input type="text-lock" class="form-control" id="longitud" placeholder="longitud">
+  </div>
+
+  <button type="submit" class="btn btn-default">Agregar</button>
+</form>
+
+
         {% block content %}
 
         {% endblock content %}

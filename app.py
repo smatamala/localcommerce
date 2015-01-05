@@ -30,8 +30,20 @@ def base():
     db = connect_db()
     cur = db.execute('SELECT id,latitud ,longitud,description,user FROM entry')
     entries = cur.fetchall()
+    cur = db.execute('SELECT distinct user FROM entry order by user desc')
+    users = cur.fetchall()
     db.close()
-    return render_template('entries.html',entries=entries)
+    return render_template('entries.html',entries=entries,users=users)
+
+@app.route('/<username>')
+def show_user(username):
+    db = connect_db()
+    cur = db.execute('SELECT id,latitud ,longitud,description,user FROM entry where user=?',[username])
+    entries = cur.fetchall()
+    cur = db.execute('SELECT distinct user FROM entry order by user desc')
+    users = cur.fetchall()
+    db.close()
+    return render_template('entries.html',entries=entries,users=users)
 
 if __name__ == "__main__":
     app.run(debug=True)

@@ -8,76 +8,37 @@
 <script type="text/javascript" 
         src= "{{ url_for('static', filename='js/jquery.gomap-1.3.3.min.js')}}"></script>
 <script>
-console.log("script");
 	
 $(document).ready(function(){
-	/*$("#map").goMap({latitude: -39.8253,
-					longitude: -73.2378,
-					zoom:13,});*/
-	console.log("ready");
-			$.ajax({
-				dataType:"json",
-			  	url: "{{ url_for('static', filename= 'php/base.php') }}",
-			}).done(function(data) {
-				$('#map').goMap({
+		$('#map').goMap({
 					latitude: -39.8253,
 					longitude: -73.2378,
 					zoom:13,
-					markers:[{
-							latitud:data[0][2],
-							longitud:data[0][1],
-							
-					   	}],
+					markers:[
+							{% for e in entries %}
+								{
+							       	latitude: {{ e.latitud }},
+							       	longitude: {{ e.longitud }},
+							       	title: '{{e.id}}',
+							       	html:{
+							       		content: 'Categoria:{{e.user}}, Descripcion: {{e.description}}',
+							       		popup:false
+							       	}
+						     	},
+					   		{% endfor %}	
+					   	],
 					   	addMarker:true,
 						disableDoubleClickZoom:true,
 				});
-				$('#map').click(function(){
-        		alert($.goMap.getMarkersCount());
-        		console.log("click");
-        		});
-			});
-});
-/*
-        $(document).ready(function(){
-        	$.ajax({
-				dataType:"json",
-			  	url: "{{ url_for('static', filename= 'php/base.php') }}",
-			}).done(function(data) {
-        	$('#map').goMap({
-        			maptype:'ROADMAP',
-					latitude: -39.8253,
-					longitude: -73.2378,
-					zoom:13,
-					markers:[{
-							latitude:data[0][2], 
-							longitude:data[0][1],
-							
-					   	},{
-							latitude:data[1][2], 
-							longitude:data[1][1],
-							
-					   	},{
-							latitude:data[2][2], 
-							longitude:data[2][1],
-							
-					   	},{
-							latitude:data[3][2], 
-							longitude:data[3][1],
-							
-					   	},{
-							latitude:data[4][2], 
-							longitude:data[4][1],
-							
-					   	}],
-					addMarker:true,
-					disableDoubleClickZoom:true,
-			});
-        	$('#map').click(function(){
-        		alert($.goMap.getMarkersCount());
+        		$("#map").click(function(){ 
+				});
 
-        	});
-        });
-      });*/
+        		
+			});
+function val() {
+d = document.getElementById("select_id").value;
+window.location.assign("http://localhost:5000/"+d);
+}
     </script>
 {% endblock script %}
 
@@ -97,25 +58,31 @@ $(document).ready(function(){
     	margin: auto;
     }
 </style>
-{% endblock style%}
+{% endblock style %}
+
+{% block select %}
+	<center><select align="center" class="form-control" id="select_id" onchange="val()"  style="width:500px;">
+	<option>Todos</option>
+	{% for user in users %}
+	  <option value="{{user.user}}">{{user.user}}</option>
+	{% endfor %}
+	</select></center>
+{% endblock select %}
 
 {% block content%}
+
  <table class="table table-striped" id="table">
 	 <thead >
 	 	<tr >
-		    <td>id</td>
-		    <td>latitud</td>
-		    <td>longitud</td>
+	 		<td>id</td>
 		    <td>descripcion</td>
-		    <td>user</td>
+		    <td>categoria</td>
 	  	</tr>
 	 </thead>
 	 <tbody>
 	 {% for entry in entries %}
 	  <tr >
-	    <td>{{ entry.id }}</td>
-	    <td>{{ entry.latitud }}</td>
-	    <td>{{ entry.longitud }}</td>
+	    <td>{{ entry.id}}</td>
 	    <td>{{ entry.description }}</td>
 	    <td>{{ entry.user}}</td>
 	  </tr>
