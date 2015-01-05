@@ -19,35 +19,24 @@ $(document).ready(function(){
 				dataType:"json",
 			  	url: "{{ url_for('static', filename= 'php/base.php') }}",
 			}).done(function(data) {
-				console.log("data");
 				$('#map').goMap({
 					latitude: -39.8253,
 					longitude: -73.2378,
 					zoom:13,
 					markers:[{
-							latitude:data[0][2], 
-							longitude:data[0][1],
+							latitud:data[0][2],
+							longitud:data[0][1],
 							
-					   	},{
-							latitude:data[1][2], 
-							longitude:data[1][1],
-							
-					   	},{
-							latitude:data[2][2], 
-							longitude:data[2][1],
-							
-					   	},{
-							latitude:data[3][2], 
-							longitude:data[3][1],
-							
-					   	},{
-							latitude:data[4][2], 
-							longitude:data[4][1],
-							
-					   	}]
+					   	}],
+					   	addMarker:true,
+						disableDoubleClickZoom:true,
 				});
-			});console.log("ready");
-        });
+				$('#map').click(function(){
+        		alert($.goMap.getMarkersCount());
+        		console.log("click");
+        		});
+			});
+});
 /*
         $(document).ready(function(){
         	$.ajax({
