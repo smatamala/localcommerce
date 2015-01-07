@@ -45,5 +45,34 @@ def show_user(username):
     db.close()
     return render_template('entries.html',entries=entries,users=users)
 
+@app.route('/new',methods=['POST'])
+def new_entry():
+    if request.method == 'POST':
+        categoria = request.form['categoria']
+        description = request.form['descripcion']
+        latitud=request.form['latitud']
+        longitud=request.form['longitud']
+        db = connect_db()
+        db.execute(
+            'INSERT INTO entry (user, description, latitud,longitud) values (?, ?,?,?)',
+            [categoria, description,latitud,longitud])
+        db.commit()
+        db.close()
+        return render_template('new.html')
+    else:
+        return "Acceso denegado"
+
+@app.route('/delete',methods=['POST'])
+def delete():
+    if request.method == 'POST':
+        ids = request.form['ids']
+        db = connect_db()
+        db.execute('DELETE FROM entry where id=?',[ids])
+        db.commit()
+        db.close()
+        return render_template('delete.html')
+    else:
+        return "Acceso denegado"
+
 if __name__ == "__main__":
     app.run(debug=True)

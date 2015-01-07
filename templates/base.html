@@ -17,28 +17,11 @@
 {% endblock link %}
 
 {% block script %}
-<script src="http://maps.google.com/maps/api/js?sensor=false"></script>
-<script type="text/javascript" 
-        src="{{ url_for('static', filename= 'js/jquery-2.1.1.min.js') }}"></script>
-<script type="text/javascript" 
-        src= "{{ url_for('static', filename='js/jquery.gomap-1.3.3.min.js')}}"></script>
-<script>
-        $(document).ready(function(){
-      $('#map').goMap({
-          latitude: -39.8253,
-          longitude: -73.2378,
-          zoom:13,
-        });
-        });
-    </script>
 {% endblock script %}
 
 <title>{% block title %}LocalCommerce{% endblock title %}</title>
 
 {% block style%}
-<style type="text/css">
-    
-</style>
 {% endblock style%}
 
 
@@ -63,14 +46,8 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="{{url_for('base')}}">Blog</a>
+      <a class="navbar-brand" href="{{url_for('base')}}">LocalCommerce</a>
     </div>
-    <div class="collapse navbar-collapse">
-      <ul class="nav navbar-nav">
-        <li><a href="{{url_for('base')}}">Noticias</a></li>
-        <li><a href="{{url_for('base')}}">Nueva entrada</a></li>
-      </ul>
-    </div><!--/.nav-collapse -->
   </div>
 </div>
 {% endblock menu %}
@@ -85,31 +62,43 @@
     <td><div align="right">
 
 
-<form class="form" role="form" name="input" action="" method="post" enctype="multipart/form-data">
+<center><form class="form" role="form" name="formulario" action="{{ url_for('new_entry') }}" method="post" enctype="multipart/form-data">
   <div class="form-group">
-    <label >Categoria</label>
-    <input type="text" class="form-control" id="categoria" placeholder="Categoria">
+    <label for="categoria">Categoria</label>
+    <input type="text" class="form-control" name="categoria" id="categoria" placeholder="Categoria" style="width:200px;">
   </div>
   <div class="form-group">
-    <label >Descripcion</label>
-    <input type="text" class="form-control" id="descripcion" placeholder="Descripcion">
+    <label for ="descripcion">Descripcion</label>
+    <input type="text" class="form-control" name="descripcion" id="descripcion" placeholder="Descripcion" style="width:200px;">
   </div>
   <div class="form-group">
     <label >ubicacion</label>
-    <input type="text-lock" class="form-control" id="latitud" placeholder="latitud">
-    <input type="text-lock" class="form-control" id="longitud" placeholder="longitud">
+    <input type="text-lock" class="form-control" name="latitud" id="latitud" placeholder="latitud" style="width:200px;">
+    <input type="text-lock" class="form-control" name="longitud" id="longitud" placeholder="longitud" style="width:200px;">
   </div>
 
   <button type="submit" class="btn btn-default">Agregar</button>
 </form>
 
+<form class="form" role="form" name="borrar" action="{{ url_for('delete') }}" method="post" enctype="multipart/form-data">
+  <div class="form-group">
+    <label for="categoria">Eliminar por id</label>
+    <input type="number" class="form-control" name="ids" id="ids" placeholder="id" style="width:200px;">
+  </div>
 
-        {% block content %}
+  <button type="submit" class="btn btn-default">Eliminar</button>
+</form></center>
 
-        {% endblock content %}
+
+        
   </div></td>
 
   </tr>
-</table> 
+<tr>{% block content %}
+
+        {% endblock content %}</tr>
+</table>
+
 </body>
+
 </html>
