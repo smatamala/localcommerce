@@ -3,21 +3,18 @@ from sqlite3 import dbapi2 as sqlite3
 from flask import (
     Flask,
     render_template,
-    url_for,
-    request,
-    flash,
-    redirect)
+    request)
 
 app = Flask(__name__)
 
-def connect_db():
+def connect_db():#coneccion a base de datos
     """Retorna una conexión a la BD"""
     path_to_db = 'entry.db'
     rv = sqlite3.connect(path_to_db)
     rv.row_factory = sqlite3.Row
     return rv
 
-def init_db():
+def init_db():#crea cursor a base de datos
     """Crea las tablas y datos de prueba"""
     db = connect_db()
     with app.open_resource('schema.sql', mode='r') as f:
@@ -26,7 +23,7 @@ def init_db():
     db.close()
 
 @app.route('/')
-def base():
+def base():#al cargar la pagina se obtienen todos los marcadores de la bd y se cargan en el mapa
     db = connect_db()
     cur = db.execute('SELECT id,latitud ,longitud,description,user FROM entry')
     entries = cur.fetchall()
@@ -36,7 +33,7 @@ def base():
     return render_template('entries.html',entries=entries,users=users)
 
 @app.route('/<username>')
-def show_user(username):
+def show_user(username):#al acceder con la ruta de la categoria se filtran los marcadores
     db = connect_db()
     cur = db.execute('SELECT id,latitud ,longitud,description,user FROM entry where user=?',[username])
     entries = cur.fetchall()
